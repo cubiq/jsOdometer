@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>Odometer</title>
+
+	<script type="text/javascript" charset="utf-8" src="odometer.js"></script>
+
+<script type="text/javascript">
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+var scoreboard,
+	step = 1;
+
+function loaded () {
+	scoreboard = new Odometer('#odometer', 6);
+	scoreboard.set(987);
+	setInterval(function () { scoreboard.add(step); }, 1000);
+}
+</script>
+
+<style type="text/css">
+body {
+	background:#555;
+	font-family:helvetica;
+}
+
+ul, li {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+#wrapper {
+	position:relative;
+	width:177px;
+	height:95px;
+	margin-bottom:20px;
+}
+
+#odo-fg {
+	position:absolute;
+	z-index:100;
+	top:0;
+	left:0;
+	width:177px;
+	height:97px;
+	background:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0,rgba(0,0,0,1)), color-stop(0.4,rgba(0,0,0,0)), color-stop(0.6,rgba(0,0,0,0)), color-stop(1,rgba(0,0,0,1)));
+}
+
+#odo-bg {
+	position:absolute;
+	z-index:25;
+	top:0;
+	left:0;
+	width:177px;
+	height:97px;
+	background:#222;
+}
+
+#odometer {
+	position:absolute;
+	z-index:50;
+	width:177px;
+	height:93px;
+	top:2px;
+	left:0;
+	overflow:hidden;
+}
+
+#odometer .gear {
+	position:absolute;
+	top:31px;
+	width:26px;
+	height:31px;
+	font-size:22px;
+	color:#ccc;
+	text-shadow:0 1px 1px rgba(0,0,0,0.8),
+		0 0 3px rgba(0,0,0,0.4);
+	-webkit-transform-style:preserve-3d;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transform:translate3d(0,0,0) rotateX(0);
+	-webkit-transition-timing-function:cubic-bezier(0.755, 0.050, 0.855, 0.060);
+}
+
+#odometer li {
+	position:absolute;
+	top:0;
+	left:0;
+	width:26px;
+	height:31px;
+	line-height:29px;
+	text-align:center;
+	-webkit-box-sizing:border-box;
+	border-left:1px solid #404040;
+	border-right:1px solid #404040;
+	border-top:1px solid #aaa;
+	border-bottom:1px solid #777;
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#777), to(#aaa));
+	-webkit-backface-visibility:hidden;
+}
+
+#odometer li.active {
+	color:#fff;
+}
+
+#gear5 { left:148px; }
+#gear4 { left:119px; }
+#gear3 { left:90px; }
+#gear2 { left:61px; }
+#gear1 { left:32px; }
+#gear0 { left:3px; }
+</style>
+</head>
+
+<body onload="loaded()">
+	<div id="wrapper">
+		<div id="odo-bg"></div>
+		<div id="odometer"></div>
+		<div id="odo-fg"></div>
+	</div>
+	
+	<button onclick="step=1">Add 1</button>
+	<button onclick="step=5">Add 5</button>
+	<button onclick="step=10">Add 10</button>
+	<button onclick="step=10000">Add 10000</button>
+	<button onclick="step=-1">Subtract 1</button>
+</body>
+</html>
